@@ -38,8 +38,8 @@ const course = 'Half Stack application development'
   return (
     <div>
       <Header course={course}></Header>
-      <Content name1={part1} len1={exercises1} name2={part2} len2={exercises2} name3={part3} len3={exercises3}></Content>
-      <Total a={exercises1} b={exercises2} c={exercises3}></Total>
+      <Content name1={part1.name} len1={part1.exercises} name2={part2.name} len2={part2.exercises} name3={part3.name} len3={part3.exercises}></Content>
+      <Total a={part1.exercises} b={part2.exercises} c={part3.exercises}></Total>
     </div>
   )
 }
