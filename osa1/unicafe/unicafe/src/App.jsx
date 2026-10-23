@@ -11,6 +11,16 @@ const App = () => {
     setvalue(value + 1);
   };
 
+  const calcTotal = () => {
+    return good + neutral + bad;
+  };
+  const calcMean = () => {
+    return (good * 1 + bad * -1) / calcTotal();
+  };
+  const calcPos = () => {
+    return ((good * 1) / calcTotal()) * 100;
+  };
+
   const increasegood = () => setGood(good + 1);
   const increaseneutral = () => setNeutral(neutral + 1);
   const increasebad = () => setBad(bad + 1);
@@ -27,9 +37,12 @@ const App = () => {
       </div>
       <div>
         <h1>Statistics</h1>
-        <p>good {good}</p>
-        <p>neutral {neutral}</p>
-        <p>bad {bad}</p>
+        <p>good: {good}</p>
+        <p>neutral: {neutral}</p>
+        <p>bad: {bad}</p>
+        <p>all: {calcTotal()}</p>
+        <p>mean: {calcMean()}</p>
+        <p>positive: {calcPos()} %</p>
       </div>
     </div>
   );
