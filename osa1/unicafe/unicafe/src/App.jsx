@@ -1,5 +1,17 @@
 import { useState } from "react";
 
+const Button = (props) => {
+  const increaseValue = (value, setvalue) => {
+    console.log(value);
+    setvalue(value + 1);
+  };
+  return (
+    <button onClick={() => increaseValue(props.var, props.fun)}>
+      {props.text}
+    </button>
+  );
+};
+
 const Statistics = (props) => {
   const calcTotal = () => {
     return props.good + props.neutral + props.bad;
@@ -34,20 +46,13 @@ const App = () => {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  const increaseValue = (value, setvalue) => {
-    console.log(value);
-    setvalue(value + 1);
-  };
-
   return (
     <div>
       <div>
         <h1>Give feedback</h1>
-        <button onClick={() => increaseValue(good, setGood)}>good</button>
-        <button onClick={() => increaseValue(neutral, setNeutral)}>
-          neutral
-        </button>
-        <button onClick={() => increaseValue(bad, setBad)}>bad</button>
+        <Button var={good} fun={setGood} text={"good"}></Button>
+        <Button var={neutral} fun={setNeutral} text={"neutral"}></Button>
+        <Button var={bad} fun={setBad} text={"bad"}></Button>
       </div>
       <div>
         <h1>Statistics</h1>
