@@ -13,12 +13,18 @@ const Statistics = (props) => {
 
   return (
     <div>
-      <p>good: {props.good}</p>
-      <p>neutral: {props.neutral}</p>
-      <p>bad: {props.bad}</p>
-      <p>all: {calcTotal()}</p>
-      <p>mean: {calcMean()}</p>
-      <p>positive: {calcPos()} %</p>
+      {(props.good != 0) | (props.neutral != 0) | (props.bad != 0) ? (
+        <div>
+          <p>Good: {props.good}</p>
+          <p>Neutral: {props.neutral}</p>
+          <p>Bad: {props.bad}</p>
+          <p>All: {calcTotal()}</p>
+          <p>Mean: {calcMean()}</p>
+          <p>Positive: {calcPos()} %</p>
+        </div>
+      ) : (
+        "No feedback given."
+      )}
     </div>
   );
 };
