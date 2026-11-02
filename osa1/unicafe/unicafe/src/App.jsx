@@ -2,7 +2,6 @@ import { useState } from "react";
 
 const Button = (props) => {
   const increaseValue = (value, setvalue) => {
-    console.log(value);
     setvalue(value + 1);
   };
   return (
@@ -13,6 +12,14 @@ const Button = (props) => {
 };
 
 const Statistics = (props) => {
+  const StatisticLine = (vals) => {
+    return (
+      <p>
+        {vals.text}: {vals.value}
+      </p>
+    );
+  };
+
   const calcTotal = () => {
     return props.good + props.neutral + props.bad;
   };
@@ -27,12 +34,12 @@ const Statistics = (props) => {
     <div>
       {(props.good != 0) | (props.neutral != 0) | (props.bad != 0) ? (
         <div>
-          <p>Good: {props.good}</p>
-          <p>Neutral: {props.neutral}</p>
-          <p>Bad: {props.bad}</p>
-          <p>All: {calcTotal()}</p>
-          <p>Mean: {calcMean()}</p>
-          <p>Positive: {calcPos()} %</p>
+          <StatisticLine text={"Good"} value={props.good} />
+          <StatisticLine text={"Neutral"} value={props.neutral} />
+          <StatisticLine text={"Bad"} value={props.bad} />
+          <StatisticLine text={"All"} value={calcTotal()} />
+          <StatisticLine text={"Mean"} value={calcMean()} />
+          <StatisticLine text={"Positive"} value={calcPos()} />
         </div>
       ) : (
         "No feedback given."
