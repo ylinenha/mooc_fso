@@ -1,7 +1,29 @@
 import { useState } from "react";
 
+const Statistics = (props) => {
+  const calcTotal = () => {
+    return props.good + props.neutral + props.bad;
+  };
+  const calcMean = () => {
+    return (props.good * 1 + props.bad * -1) / calcTotal();
+  };
+  const calcPos = () => {
+    return ((props.good * 1) / calcTotal()) * 100;
+  };
+
+  return (
+    <div>
+      <p>good: {props.good}</p>
+      <p>neutral: {props.neutral}</p>
+      <p>bad: {props.bad}</p>
+      <p>all: {calcTotal()}</p>
+      <p>mean: {calcMean()}</p>
+      <p>positive: {calcPos()} %</p>
+    </div>
+  );
+};
+
 const App = () => {
-  // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
@@ -10,20 +32,6 @@ const App = () => {
     console.log(value);
     setvalue(value + 1);
   };
-
-  const calcTotal = () => {
-    return good + neutral + bad;
-  };
-  const calcMean = () => {
-    return (good * 1 + bad * -1) / calcTotal();
-  };
-  const calcPos = () => {
-    return ((good * 1) / calcTotal()) * 100;
-  };
-
-  const increasegood = () => setGood(good + 1);
-  const increaseneutral = () => setNeutral(neutral + 1);
-  const increasebad = () => setBad(bad + 1);
 
   return (
     <div>
@@ -37,12 +45,7 @@ const App = () => {
       </div>
       <div>
         <h1>Statistics</h1>
-        <p>good: {good}</p>
-        <p>neutral: {neutral}</p>
-        <p>bad: {bad}</p>
-        <p>all: {calcTotal()}</p>
-        <p>mean: {calcMean()}</p>
-        <p>positive: {calcPos()} %</p>
+        <Statistics good={good} neutral={neutral} bad={bad}></Statistics>
       </div>
     </div>
   );
