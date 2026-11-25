@@ -3,11 +3,13 @@ import personsService from "./services/persons";
 import AddInfo from "./components/AddInfo";
 import FilterBook from "./components/FilterBook";
 import PersonInfo from "./components/PersonInfo";
+import Notification from "./components/Notification";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [changeMessage, setChangeMessage] = useState(null);
 
   useEffect(() => {
     personsService.getAll().then((initialPersons) => {
@@ -40,6 +42,12 @@ const App = () => {
             );
             setNewName("");
             setNewNumber("");
+            setChangeMessage(
+              `The phone number of '${personObject.name}' was changed to the phone book successfully.`,
+            );
+            setTimeout(() => {
+              setChangeMessage(null);
+            }, 5000);
           });
       }
       return;
@@ -52,6 +60,12 @@ const App = () => {
       setPersons(persons.concat(returnedPerson));
       setNewName("");
       setNewNumber("");
+      setChangeMessage(
+        `Person '${personObject.name}' was added to the phone book successfully.`,
+      );
+      setTimeout(() => {
+        setChangeMessage(null);
+      }, 5000);
     });
   };
 
@@ -82,12 +96,19 @@ const App = () => {
 
     personsService.remove(id).then(() => {
       setPersons(persons.filter((person) => person.id !== id));
+      setChangeMessage(
+        `Person '${name}' was deleted from the phone book successfully.`,
+      );
+      setTimeout(() => {
+        setChangeMessage(null);
+      }, 5000);
     });
   };
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={changeMessage} />
       <div>
         <FilterBook filter={filter} handleFilterChange={handleFilterChange} />
       </div>
