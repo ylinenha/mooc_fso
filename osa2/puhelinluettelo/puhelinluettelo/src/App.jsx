@@ -25,9 +25,9 @@ const App = () => {
 
     const personObject = { name: newName, number: newNumber };
 
-    personsService.update(id, changedNote).then((response) => {
-      console.log(response);
-      setPersons(persons.concat(personObject));
+    personsService.create(personObject).then((returnedPerson) => {
+      console.log(returnedPerson);
+      setPersons(persons.concat(returnedPerson));
       setNewName("");
       setNewNumber("");
     });
@@ -53,6 +53,16 @@ const App = () => {
     person.name.toLowerCase().includes(filter.toLowerCase()),
   );
 
+  const handleDelete = (id, name) => {
+    if (!window.confirm(`Delete ${name}?`)) {
+      return;
+    }
+
+    personsService.remove(id).then(() => {
+      setPersons(persons.filter((person) => person.id !== id));
+    });
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -72,7 +82,13 @@ const App = () => {
         (person) => (
           console.log(person),
           console.log(person.name),
-          (<PersonInfo key={person.name} person={person} />)
+          (
+            <PersonInfo
+              key={person.name}
+              person={person}
+              handleDelete={() => handleDelete(person.id, person.name)}
+            />
+          )
         ),
       )}
     </div>
