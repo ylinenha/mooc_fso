@@ -10,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [changeMessage, setChangeMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     personsService.getAll().then((initialPersons) => {
@@ -48,6 +49,15 @@ const App = () => {
             setTimeout(() => {
               setChangeMessage(null);
             }, 5000);
+          })
+          .catch((error) => {
+            setErrorMessage(
+              `Person '${personObject.name}' has already been removed from the phonebook.`,
+            );
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 5000);
+            setPersons(persons.filter((p) => p.id !== person.id));
           });
       }
       return;
@@ -108,7 +118,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={changeMessage} />
+      <Notification message={changeMessage} type="success" />
+      <Notification message={errorMessage} type="error" />
       <div>
         <FilterBook filter={filter} handleFilterChange={handleFilterChange} />
       </div>
